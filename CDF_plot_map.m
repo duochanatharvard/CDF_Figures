@@ -33,6 +33,7 @@
 %  - 'xtick','ytick': ticks of map
 %  - "daspect"
 %  - "interpreter"                               default: none
+%  - "fontweight"                                default: bold
 % 
 % Last update: 2019-04-10
  
@@ -62,6 +63,12 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Set up the projection
     % *********************************************************************
+    if nnz(ismember(para(:,1),'fontweight')) == 0,
+        fontweight = 'bold';
+    else
+        fontweight = para{ismember(para(:,1),'fontweight'),2};
+    end
+    
     if nnz(ismember(para(:,1),'region')) == 0,
         region_list = [0 360 -90 90];
     else
@@ -155,7 +162,7 @@ function CDF_plot_map(type,data,varargin)
         end
     end
     
-    if nnz(ismember(para(:,1),'interpreter')) == 0,
+    if nnz(ismember(para(:,1),'interpreter')) ~= 0,
         h2.Label.Interpreter = 'latex';
     end
     
@@ -247,8 +254,10 @@ function CDF_plot_map(type,data,varargin)
             else
                 bckgrd = para{ismember(para(:,1),'bckgrd'),2};
             end
-            m_patch([r(1)-360 r(2)+360 r(2)+360 r(1)-360],[r(3) r(3) r(4) r(4)],...
+            if 1,           % whether plot background
+             m_patch([r(1)-360 r(2)+360 r(2)+360 r(1)-360],[r(3) r(3) r(4) r(4)],...
                      bckgrd,'linest','none');
+            end
 
             h = CDF_m_pcolor(lon,lat,data);
 
@@ -367,9 +376,9 @@ function CDF_plot_map(type,data,varargin)
     end
     
     if nnz(ismember(para(:,1),'interpreter')) == 0,
-        m_grid('xtick',x_tick,'ytick',y_tick,'fontsize',fs-2,'fontweight','normal');
+        m_grid('xtick',x_tick,'ytick',y_tick,'fontsize',fs-2,'fontweight',fontweight);
     else
-        m_grid_latex('xtick',x_tick,'ytick',y_tick,'fontsize',fs-2,'fontweight','normal');
+        m_grid('xtick',x_tick,'ytick',y_tick,'fontsize',fs-2,'fontweight',fontweight);
     end
     
     % *********************************************************************
@@ -421,7 +430,12 @@ function CDF_plot_map(type,data,varargin)
     
     set(gcf, 'PaperPositionMode','auto');
     set(gcf,'color','w');
-    set(gca,'fontsize',fs,'fontweight','normal','fontname','CMU Serif');
+
+    if nnz(ismember(para(:,1),'interpreter')) == 0,
+        set(gca,'fontsize',fs,'fontweight',fontweight);
+    else
+        set(gca,'fontsize',fs,'fontweight','normal','fontname','CMU Serif');
+    end
 
     m_plot([r(1) r(2) r(2) r(1) r(1)],[r(3) r(3) r(4) r(4) r(3)],...
         'k-','linewi',2)
@@ -447,5 +461,5 @@ function CDF_plot_map(type,data,varargin)
 
 
     m_text(r_x,r_y,plabel,'color',plcol,...
-           'fontsize',fs + 2, 'fontweight','bold');    
+           'fontsize',fs + 10, 'fontweight','bold');    
 end

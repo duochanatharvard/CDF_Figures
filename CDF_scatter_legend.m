@@ -1,4 +1,4 @@
-% CDF_scatter_legend(in_name,in_st,in_col,mode,num_col,write_direction,ftsz)
+% CDF_scatter_legend(in_name,in_st,in_col,mode_in,varargin)
 % 
 % - in_name: namelist of the scatters
 % - in_st: the style of legend                         default: boxes

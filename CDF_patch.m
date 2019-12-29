@@ -5,7 +5,7 @@ function h = CDF_patch(x,y,col,a)
         a = 0.05;
     end
     
-    if 0,
+    if 1,
         for i = 1:size(y,2)
             up(i) = quantile(y(:,i),1-a/2);
             low(i) = quantile(y(:,i),a/2);

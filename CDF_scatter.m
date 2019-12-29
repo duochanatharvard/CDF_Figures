@@ -41,9 +41,9 @@ function [out_st,out_col] = CDF_scatter(x,y,n2,varargin)
     end
 
     if nnz(ismember(para(:,1),'mksize')) == 0,
-        mksize = 10;
+        mksize = 10;  mk_flag = 1;
     else
-        mksize = para{ismember(para(:,1),'mksize'),2};
+        mksize = para{ismember(para(:,1),'mksize'),2};  mk_flag = 2;
     end
  
 
@@ -61,8 +61,14 @@ function [out_st,out_col] = CDF_scatter(x,y,n2,varargin)
     
     hold on;
     for i = 1:n1
-        plot(x(i),y(i),out_st(i),'color',edgecol,...
-            'markerfacecolor',out_col(i,:),...
-            'markersize',mksize,'linewi',linewi);
+        if numel(mksize) == 1,
+            plot(x(i),y(i),out_st(i),'color',edgecol,...
+                'markerfacecolor',out_col(i,:),...
+                'markersize',mksize,'linewi',linewi);
+        else
+            plot(x(i),y(i),out_st(i),'color',edgecol,...
+                'markerfacecolor',out_col(i,:),...
+                'markersize',mksize(i,:),'linewi',linewi);
+        end
     end
 end

@@ -9,6 +9,7 @@
 %  - "fs_tit": excessive size of title           default: 3
 %  - "plcol":  color of panel label              default: black
 %  - "do_title": to write panel_label as title   default: 0
+%  - "fontweight"                                default: bold
 %
 % Last update: 2018-08-13
 
@@ -33,6 +34,12 @@ function CDF_panel(axis_range,panel_label,legend_text,x_label_text,y_label_text,
     % *********************************************************************
     % Set legend
     % ********************************************************************* 
+    if nnz(ismember(para(:,1),'fontweight')) == 0,
+        fontweight = 'bold';
+    else
+        fontweight = para{ismember(para(:,1),'fontweight'),2};
+    end
+    
     if nnz(ismember(para(:,1),'legend_h')) == 0,
         h = gca;
     else
@@ -40,7 +47,7 @@ function CDF_panel(axis_range,panel_label,legend_text,x_label_text,y_label_text,
     end    
     
     if ~isempty(legend_text),
-        legend(h,legend_text,'fontsize',18,'fontweight','bold','location','best')
+        legend(h,legend_text,'fontsize',18,'fontweight',fontweight,'location','best')
     end
 
     % *********************************************************************
@@ -64,8 +71,9 @@ function CDF_panel(axis_range,panel_label,legend_text,x_label_text,y_label_text,
     else
         fs = para{ismember(para(:,1),'fontsize'),2};
     end
-    set(gca,'fontsize',fs,'fontweight','bold');
+    set(gca,'fontsize',fs,'fontweight',fontweight);
 
+    
     % *********************************************************************
     % Set colorbar
     % ********************************************************************* 
@@ -112,12 +120,14 @@ function CDF_panel(axis_range,panel_label,legend_text,x_label_text,y_label_text,
     % *********************************************************************
     % Set title or panel
     % ********************************************************************* 
+    
     if ~isempty(panel_label),
         if nnz(ismember(para(:,1),'dotitle')) == 0,
             do_title = 0;
         else
             do_title = para{ismember(para(:,1),'dotitle'),2};
         end
+        
         
         if nnz(ismember(para(:,1),'plcol')) == 0,
             plcol = [1 1 1] * 0;
@@ -145,7 +155,7 @@ function CDF_panel(axis_range,panel_label,legend_text,x_label_text,y_label_text,
             end
             
             dis_x = (r(2) - r(1)) / 15;
-            dis_y = (r(4) - r(3)) / 12;
+            dis_y = (r(4) - r(3)) / 8;
             r_x = r(1) + dis_x;
             r_y = r(4) - dis_y;
             

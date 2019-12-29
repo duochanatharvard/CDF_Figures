@@ -1,4 +1,4 @@
-% CDF_boundaries(mode_line,mode_tool,mode_fill)
+% CDF_boundaries(varargin)
 %  
 % CDF_boundaries draw the boundaries of countries in the world, provinces
 % in China, or states in the U.S.

@@ -1,7 +1,10 @@
 % out = CDF_Table_latex(title,data,N_fig,cap,label,N_line,do_full)
 % May have to change the seperator in "connect_items2" depending on
 % requirements
-% "title" is the title of rach column
+% "title" is the title of each column
+% "label" is the label of table in latex
+% "is_error_after" is a matrix indicating if the number after each number is an error
+
 
 function out = CDF_Table_latex(title,data,N_fig,cap,label,N_line,do_full,septor,is_error_after)
 
@@ -10,8 +13,6 @@ function out = CDF_Table_latex(title,data,N_fig,cap,label,N_line,do_full,septor,
     if ~exist('septor','var'), septor = ',';   end
     if isempty(septor), septor = ',';   end
     if ~exist('is_error_after','var'), is_error_after = zeros(size(data)); end
-    
-    is_error_after
     
     out = ['\n\n\n'];
     for i = 1:ceil(size(data,1)/N_line)
@@ -84,14 +85,14 @@ function out = connect_items(input,N_fig,septor,is_error)
             if  ischar(input{i}),
                 out = [out,' ',input{i},' & '];
             else
-                out = [out,' ',connect_items2(input{i},N_fig,septor,is_error{i}),' & '];
+                out = [out,' ',connect_items2(input{i},N_fig,septor,is_error),' & '];
             end
         end
         i = numel(input);
         if  ischar(input{i}),
             out = [out,' ',input{i},' \\\\ '];
         else
-            out = [out,' ',connect_items2(input{i},N_fig,septor,is_error{i}),' \\\\ '];
+            out = [out,' ',connect_items2(input{i},N_fig,septor,is_error),' \\\\ '];
         end
             
     else
@@ -107,10 +108,19 @@ end
 function out = connect_items2(input,N_fig,septor,is_error)
     out = [];
     for i = 1:numel(input)
-        if is_error(i) == 1,
-            out = [out , table_str2num(input(i),N_fig),' $\\pm$ '];
+        if isnan(input(i)),
+            if is_error(i) == 1,
+                out = [out , ' -- ',' $\\pm$ '];
+            else
+                out = [out , ' -- ',' ',septor,' '];
+            end
+     
         else
-            out = [out , table_str2num(input(i),N_fig),' ',septor,' '];
+            if is_error(i) == 1,
+                out = [out , table_str2num(input(i),N_fig),' $\\pm$ '];
+            else
+                out = [out , table_str2num(input(i),N_fig),' ',septor,' '];
+            end
         end
     end
     out(end-1:end) = [];
