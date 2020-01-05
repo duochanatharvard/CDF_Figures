@@ -1,12 +1,17 @@
-% file_name = CDF_filenames(dir_load)
-function file_name = CDF_filenames(dir_load,file_type)
+% file_name = CDF_filenames(dir_load,file_type,keyword)
+function file_name = CDF_filenames(dir_load,file_type,keyword)
     
     dir = pwd;
     cd(dir_load);
 
     command = 'ls -1';
-    if exist('file_type','var'),
+    
+    if exist('file_type','var') && ~exist('keyword','var'),
         command = [command,' *.',file_type];
+    elseif exist('keyword','var') && ~exist('file_type','var'),
+        command = [command,' *',keyword,'*'];
+    elseif exist('keyword','var') && exist('file_type','var'),
+        command = [command,' *',keyword,'*.',file_type];
     end
     
     [~,a] = system(command);
