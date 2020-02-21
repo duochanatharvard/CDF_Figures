@@ -94,7 +94,8 @@ ap = [x(:) y(:)]';
 [v,d]=eig(C); 
 d = sdwidth * sqrt(d); % convert variance to sdwidth*sd
 bp = (v*d*ap) + repmat(means, 1, size(ap,2)); 
-h = m_plot(bp(1,:), bp(2,:), '-', 'parent', axh);
+% h = m_plot(bp(1,:), bp(2,:), '-', 'parent', axh);
+h = plot(bp(1,:), bp(2,:), '-', 'parent', axh);
 
 %-----------------------------
 function h = show3d(means, C, sdwidth, npts, axh)

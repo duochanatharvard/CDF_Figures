@@ -2,6 +2,8 @@
 function CDF_save(panel,app,reso,file_name)
 
     dir_save = '/Users/zen/Desktop/Peter/Figures/';
+    set(gcf, 'PaperPositionMode','auto');
+    set(gcf,'color','w');
 
     c = clock;
     time_text = [num2str(c(1)*10000+c(2)*100+c(3)),'_',num2str(c(4)),';',num2str(c(5)),';',num2str(round(c(6)))];

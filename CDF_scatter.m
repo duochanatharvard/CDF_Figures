@@ -45,6 +45,17 @@ function [out_st,out_col] = CDF_scatter(x,y,n2,varargin)
     else
         mksize = para{ismember(para(:,1),'mksize'),2};  mk_flag = 2;
     end
+
+    if nnz(ismember(para(:,1),'xstd')) == 0,
+    else
+        x_std = para{ismember(para(:,1),'xstd'),2};
+        y_std = para{ismember(para(:,1),'ystd'),2};
+        hold on;
+        for ct = 1:max(size(x))
+            plot(x(ct) + [-1 1] * x_std(ct),y(ct) + [-1 1] * y_std(ct) * 0,'-','color',[1 1 1]*0.7);
+            plot(x(ct) + [-1 1] * x_std(ct) * 0,y(ct) + [-1 1] * y_std(ct),'-','color',[1 1 1]*0.7);
+        end
+    end
  
 
     % *********************************************************************

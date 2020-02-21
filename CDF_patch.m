@@ -22,7 +22,7 @@ function h = CDF_patch(x,y,col,a)
     low = low(logic);
     
     h = patch([x fliplr(x)],[up fliplr(low)],col);
-    alpha(h,0.6)
+    alpha(h,0.5)
     set(h,'linest','none')
 
 end

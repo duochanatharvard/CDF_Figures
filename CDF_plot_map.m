@@ -301,7 +301,7 @@ function CDF_plot_map(type,data,varargin)
                     for ct2 = lat_list(1:1:end)
                         if M(ct1,ct2) ~= 0 && S(ct1,ct2,1) ~=0,
                             % m_plot(lon(ct1,ct2),lat(ct1,ct2),'^','color','w','markersize',4,'linewi',3)
-                            m_plot(lon(ct1,ct2),lat(ct1,ct2),'.','color','k','markersize',6)
+                            m_plot(lon(ct1,ct2),lat(ct1,ct2),'.','color','k','markersize',12)
                         end
 
                         if M(ct1,ct2) ~= 0 && S(ct1,ct2,2) ~=0,
