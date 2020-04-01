@@ -55,7 +55,7 @@ function CDF_panel(axis_range,panel_label,legend_text,x_label_text,y_label_text,
     % ********************************************************************* 
     if ~isempty(axis_range),
         ss = axis_range;
-        plot(ss([1 2 2 1 1]),ss([3 3 4 4 3]),'k-','linewi',2);
+        plot(ss([1 2 2 1 1]),ss([3 3 4 4 3]),'k-','linewi',1);
         axis(ss);
     end
     grid on;

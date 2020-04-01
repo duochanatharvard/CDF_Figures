@@ -31,7 +31,7 @@ function CDF_flower_plot(input,if_fig)
         end
         daspect([1 1 1])
 
-        col = color_shuang([0 1-1/NN],[.5 .5]-0.05,[1 1]-0.1,NN,0);
+        col = colormap_CD([0 1-1/NN],[.5 .5]-0.05,[1 1]-0.1,NN,0);
         plot(X,Y,'.','color',[1 1 1]*.9,'markersize',130);
         for i = 1:NN
             plot(X(i),Y(i),'.','color',col(i,:),'markersize',100);

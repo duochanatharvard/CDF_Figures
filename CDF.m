@@ -38,6 +38,7 @@ function CDF
     disp(' ')
     disp('    Other Figures:') 
     disp('        CDF_flower_plot         % Plot the connection between groups')
+    disp('        CDF_plot_intercompare   % An updated flower plot, and allows for self comparison')
     disp('        CDF_cloud               % Plot cloud using QN and Theta')
     disp(' ')
     disp('Set Figure properties: ')
