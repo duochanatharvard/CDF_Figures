@@ -5,7 +5,9 @@
 % 
 % Last update: 2018-08-11
 
-function CDF_pcolor(X,Y,Z)
+function h = CDF_pcolor(X,Y,Z)
+
+    X = squeeze(X);
 
     if nargin == 1,
         Z = X;

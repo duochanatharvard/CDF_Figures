@@ -9,6 +9,8 @@ function CDF_bar_stuck(x,y,col)
         col = distinguishable_colors(size(y,1));
     end
     
+    y(isnan(y)) = 0;
+    
     pic_t = x;
     pic = y;
         

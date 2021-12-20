@@ -43,7 +43,7 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Parse input argument
     % ********************************************************************* 
-    if numel(varargin) == 1,
+    if numel(varargin) == 1
         varargin = varargin{1};
     end
     para = reshape(varargin(:),2,numel(varargin)/2)';
@@ -63,13 +63,13 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Set up the projection
     % *********************************************************************
-    if nnz(ismember(para(:,1),'fontweight')) == 0,
+    if nnz(ismember(para(:,1),'fontweight')) == 0
         fontweight = 'bold';
     else
         fontweight = para{ismember(para(:,1),'fontweight'),2};
     end
     
-    if nnz(ismember(para(:,1),'region')) == 0,
+    if nnz(ismember(para(:,1),'region')) == 0
         region_list = [0 360 -90 90];
     else
         region_list = para{ismember(para(:,1),'region'),2};
@@ -80,7 +80,7 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Generate grids
     % *********************************************************************
-    if nnz(ismember(para(:,1),'lat')) == 0,
+    if nnz(ismember(para(:,1),'lat')) == 0
         reso_x = 360 / size(data,1);
         reso_y = 180 / size(data,2);
         lon = 0+reso_x/2 : reso_x : 360;
@@ -95,13 +95,13 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Generate colormap
     % ********************************************************************* 
-    if nnz(ismember(para(:,1),'crange')) == 0,
+    if nnz(ismember(para(:,1),'crange')) == 0
         c_range = [min((data(:))) max((data(:)))];
         flag = 1;
     else
         c_range = para{ismember(para(:,1),'crange'),2};
-        if numel(c_range) == 1;
-            if min((data(:))) < 0,
+        if numel(c_range) == 1
+            if min((data(:))) < 0
                 c_range = [-1 1]* c_range;
             else
                 c_range = [0 1]* c_range;
@@ -111,17 +111,17 @@ function CDF_plot_map(type,data,varargin)
     end
     caxis(c_range);
 
-    if nnz(ismember(para(:,1),'cnum')) == 0,
+    if nnz(ismember(para(:,1),'cnum')) == 0
         c_num = 6;
     else
         c_num = para{ismember(para(:,1),'cnum'),2};
     end
 
-    if nnz(ismember(para(:,1),'cmap')) == 0,
-        if flag == 1,
+    if nnz(ismember(para(:,1),'cmap')) == 0
+        if flag == 1
                 colormap_CD([0.45 0.70; 0.25 0.9],[0.7 0.35],[0 0],c_num);
         else
-            if min((data(:))) < 0,
+            if min((data(:))) < 0
                 colormap_CD([0.45 0.7; 0.22  0.9],[1 0.35],[0 0],c_num);
             else
                 colormap_CD([0.25  0.9],[0.99 0.35],[0 0],c_num);
@@ -135,48 +135,48 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Plot colorbar
     % *********************************************************************
-    if nnz(ismember(para(:,1),'barloc')) == 0,
+    if nnz(ismember(para(:,1),'barloc')) == 0
         location = 'eastoutside';
     else
         location = para{ismember(para(:,1),'barloc'),2};
     end 
     h2 = colorbar('location',location);
 
-    if nnz(ismember(para(:,1),'bartit')) == 0,
+    if nnz(ismember(para(:,1),'bartit')) == 0
         title_colorbar = '';
     else
         title_colorbar = para{ismember(para(:,1),'bartit'),2};
     end 
 
-    if nnz(ismember(location,{'eastoutside','east'})) > 0,
-        if nnz(ismember(para(:,1),'interpreter')) == 0,
+    if nnz(ismember(location,{'eastoutside','east'})) > 0
+        if nnz(ismember(para(:,1),'interpreter')) == 0
             ylabel(h2,title_colorbar)
         else
             ylabel(h2,title_colorbar,'Interpreter','Latex')
         end
     else
-        if nnz(ismember(para(:,1),'interpreter')) == 0,
+        if nnz(ismember(para(:,1),'interpreter')) == 0
             xlabel(h2,title_colorbar)
         else
             xlabel(h2,title_colorbar,'Interpreter','Latex')
         end
     end
     
-    if nnz(ismember(para(:,1),'interpreter')) ~= 0,
+    if nnz(ismember(para(:,1),'interpreter')) ~= 0
         h2.Label.Interpreter = 'latex';
     end
     
-    if nnz(ismember(para(:,1),'bartickl')) ~= 0,
+    if nnz(ismember(para(:,1),'bartickl')) ~= 0
         
         bartickl = para{ismember(para(:,1),'bartickl'),2};
         
-        if nnz(ismember(para(:,1),'bartick')) ~= 0,
+        if nnz(ismember(para(:,1),'bartick')) ~= 0
             bartick = para{ismember(para(:,1),'bartick'),2};       
         else
             bartick = c_range(1):1:c_range(2);
         end
         
-        if nnz(ismember(location,{'eastoutside','east'})) > 0,
+        if nnz(ismember(location,{'eastoutside','east'})) > 0
             set(h2,'ytick',bartick,'yticklabel',bartickl)
         else
             set(h2,'xtick',bartick,'xticklabel',bartickl)
@@ -186,24 +186,24 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Plot Variable: Scatter
     % *********************************************************************
-    if strcmp(type,'scatter'),
+    if strcmp(type,'scatter')
 
         % *************************************************************
         % Plot background
         % *************************************************************
-        if nnz(ismember(para(:,1),'bckgrd')) == 0,
+        if nnz(ismember(para(:,1),'bckgrd')) == 0
             bckgrd = [1 1 1]/2;
         else
             bckgrd = para{ismember(para(:,1),'bckgrd'),2};
         end
 
-        if nnz(ismember(para(:,1),'scatsize')) == 0,
+        if nnz(ismember(para(:,1),'scatsize')) == 0
             scatsize = 5;
         else
             scatsize = para{ismember(para(:,1),'scatsize'),2};
         end
 
-        if nnz(ismember(para(:,1),'scatst')) == 0,
+        if nnz(ismember(para(:,1),'scatst')) == 0
             scatst = '.';
         else
             scatst = para{ismember(para(:,1),'scatst'),2};
@@ -227,11 +227,11 @@ function CDF_plot_map(type,data,varargin)
         % *************************************************************
         % Prepare and mask the data 
         % *************************************************************
-        if nnz(ismember(para(:,1),'mask')) == 0,
+        if nnz(ismember(para(:,1),'mask')) == 0
             mask = ones(size(data));
         else
             mask = para{ismember(para(:,1),'mask'),2};
-            if size(mask,1) ~= size(data,1),
+            if size(mask,1) ~= size(data,1)
                 mask = mask';
             end
         end
@@ -244,17 +244,17 @@ function CDF_plot_map(type,data,varargin)
         % *****************************************************************
         % Pcolor
         % *****************************************************************
-        if strcmp(type,'pcolor'),
+        if strcmp(type,'pcolor')
 
             % *************************************************************
             % Plot background
             % *************************************************************
-            if nnz(ismember(para(:,1),'bckgrd')) == 0,
+            if nnz(ismember(para(:,1),'bckgrd')) == 0
                 bckgrd = [1 1 1]/2;
             else
                 bckgrd = para{ismember(para(:,1),'bckgrd'),2};
             end
-            if 1,           % whether plot background
+            if 1           % whether plot background
              m_patch([r(1)-360 r(2)+360 r(2)+360 r(1)-360],[r(3) r(3) r(4) r(4)],...
                      bckgrd,'linest','none');
             end
@@ -264,9 +264,9 @@ function CDF_plot_map(type,data,varargin)
         % *****************************************************************
         % Filled Contour
         % *****************************************************************
-        elseif strcmp(type,'contourf'),
+        elseif strcmp(type,'contourf')
             
-            if flag == 0,
+            if flag == 0
                 line_list = [-100000 -1:1/c_num:1] * c_range(2);
                 m_contourf(lon,lat,data,line_list,'linest','none');
             else
@@ -277,11 +277,11 @@ function CDF_plot_map(type,data,varargin)
         % *****************************************************************
         % Significance test
         % *****************************************************************
-        if nnz(ismember(para(:,1),'sig')) ~= 0,
+        if nnz(ismember(para(:,1),'sig')) ~= 0
 
             pic_sig = para{ismember(para(:,1),'sig'),2};
             
-            if nnz(ismember(para(:,1),'sigtype')) == 0,
+            if nnz(ismember(para(:,1),'sigtype')) == 0
                 sigtype = 'marker';
             else
                 sigtype = para{ismember(para(:,1),'sigtype'),2};
@@ -292,23 +292,23 @@ function CDF_plot_map(type,data,varargin)
             lon_list = find(lon(:,1) >= r(1) & lon(:,1) <= r(2));
             lat_list = find(lat(1,:) >= r(3) & lat(1,:) <= r(4));
             
-            if strcmp(sigtype,'marker'),   % Use markers to indicate significance
+            if strcmp(sigtype,'marker')   % Use markers to indicate significance
                 reso_x = abs(mode(lon(2:end,1) - lon(1:end-1,1)));
                 reso_y = abs(mode(lat(1,2:end) - lat(1,1:end-1)));
-                intv = max(2.5 / reso_x,1); 
+                intv = max(2 / reso_x,1); 
                 intv = max([intv, 1]);
                 for ct1 = lon_list(1:intv:end)'
-                    for ct2 = lat_list(1:1:end)
-                        if M(ct1,ct2) ~= 0 && S(ct1,ct2,1) ~=0,
+                    for ct2 = lat_list(1:intv:end)
+                        if M(ct1,ct2) ~= 0 && S(ct1,ct2,1) ~=0
                             % m_plot(lon(ct1,ct2),lat(ct1,ct2),'^','color','w','markersize',4,'linewi',3)
-                            m_plot(lon(ct1,ct2),lat(ct1,ct2),'.','color','k','markersize',12)
+                            m_plot(lon(ct1,ct2),lat(ct1,ct2),'.','color','k','markersize',5,'linewi',2)
                         end
 
-                        if M(ct1,ct2) ~= 0 && S(ct1,ct2,2) ~=0,
-                            % m_plot(lon(ct1,ct2),lat(ct1,ct2),'v','color','w','markersize',4,'linewi',3)
-                            % m_plot(lon(ct1,ct2),lat(ct1,ct2),'v','color','k','markersize',4)
-                            m_plot(lon(ct1,ct2)+[-1 1]*1.2,lat(ct1,ct2)+[-1 1]*0,'-','color','k','markersize',4)
-                        end                        
+%                         if M(ct1,ct2) ~= 0 && S(ct1,ct2,2) ~=0
+%                             % m_plot(lon(ct1,ct2),lat(ct1,ct2),'v','color','w','markersize',4,'linewi',3)
+%                             % m_plot(lon(ct1,ct2),lat(ct1,ct2),'v','color','k','markersize',4)
+%                             m_plot(lon(ct1,ct2)+[-1 1]*1.2,lat(ct1,ct2)+[-1 1]*0,'-','color','k','markersize',4)
+%                         end                        
                     end
                 end
                 
@@ -316,11 +316,11 @@ function CDF_plot_map(type,data,varargin)
                 reso_x = abs(mode(lon(2:end,1) - lon(1:end-1,1)));
                 reso_y = abs(mode(lat(1,2:end) - lat(1,1:end-1)));
                 
-                if reso_x >= 5,
+                if reso_x >= 5
                     intv = max(5 / reso_x,1); 
                     for ct1 = lon_list(1:intv:end)'
                         for ct2 = lat_list(1:intv:end)
-                            if M(ct1,ct2) ~= 0 && any(S(ct1,ct2,:)),
+                            if M(ct1,ct2) ~= 0 && any(S(ct1,ct2,:))
 
                                 m_plot(lon(ct1,ct2) + [-0.5 0.5] * reso_x * 2, ...
                                        lat(ct1,ct2) + [-0.5 0.5] * reso_y * 2,...
@@ -329,23 +329,24 @@ function CDF_plot_map(type,data,varargin)
                         end
                     end
                 else
-                    for ct1 = lon_list'
-                        for ct2 = lat_list
-                            if M(ct1,ct2) ~= 0 && any(S(ct1,ct2,:)),
+                    jg = 2;
+                    for ct1 = lon_list(1:jg:end)'
+                        for ct2 = lat_list(1:jg:end)
+                            if M(ct1,ct2) ~= 0 && any(S(ct1,ct2,:))
 
-                                if rem(ct1,2) == 1,
-                                    lon1 = lon(ct1,ct2) + [-0.5 0.5] * reso_x;
+                                if rem(ct1,2) == 1
+                                    lon1 = lon(ct1,ct2) + [-0.5 0.5] * reso_x * jg;
                                 else
-                                    lon1 = lon(ct1,ct2) + [0.5 -0.5] * reso_x;
+                                    lon1 = lon(ct1,ct2) + [0.5 -0.5] * reso_x * jg;
                                 end
 
-                                if rem(ct2,2) == 1,
-                                    lat1 = lat(ct1,ct2) + [-0.5 0.5] * reso_y;
+                                if rem(ct2,2) == 1
+                                    lat1 = lat(ct1,ct2) + [-0.5 0.5] * reso_y * jg;
                                 else
-                                    lat1 = lat(ct1,ct2) + [0.5 -0.5] * reso_y;
+                                    lat1 = lat(ct1,ct2) + [0.5 -0.5] * reso_y * jg;
                                 end
 
-                                m_plot(lon1,lat1,'-','color',[.9 .7 0]*0.4,'linewi',1)
+                                m_plot(lon1,lat1,'-','color',[1 1 1]*.6,'linewi',1)
                             end
                         end
                     end
@@ -357,25 +358,25 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Plot grid lines
     % *********************************************************************
-    if nnz(ismember(para(:,1),'fontsize')) == 0,
+    if nnz(ismember(para(:,1),'fontsize')) == 0
         fs = 20;
     else
         fs = para{ismember(para(:,1),'fontsize'),2};
     end
 
-    if nnz(ismember(para(:,1),'xtick')) == 0,
+    if nnz(ismember(para(:,1),'xtick')) == 0
         x_tick = [-360:60:360];
     else
         x_tick = para{ismember(para(:,1),'xtick'),2};
     end
 
-    if nnz(ismember(para(:,1),'ytick')) == 0,
+    if nnz(ismember(para(:,1),'ytick')) == 0
         y_tick = [-90:30:90];
     else
         y_tick = para{ismember(para(:,1),'ytick'),2};
     end
     
-    if nnz(ismember(para(:,1),'interpreter')) == 0,
+    if nnz(ismember(para(:,1),'interpreter')) == 0
         m_grid('xtick',x_tick,'ytick',y_tick,'fontsize',fs-2,'fontweight',fontweight);
     else
         m_grid('xtick',x_tick,'ytick',y_tick,'fontsize',fs-2,'fontweight',fontweight);
@@ -384,33 +385,33 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Add coastlines
     % *********************************************************************
-    if nnz(ismember(para(:,1),'coastcol')) == 0,
+    if nnz(ismember(para(:,1),'coastcol')) == 0
         coast_color = [1 1 1] * 0;
     else
         coast_color = para{ismember(para(:,1),'coastcol'),2};
     end
-    if nnz(ismember(para(:,1),'subcoast')) == 0,
+    if nnz(ismember(para(:,1),'subcoast')) == 0
         subcoast = 0;
     else
         subcoast = para{ismember(para(:,1),'subcoast'),2};
     end
-    if nnz(ismember(para(:,1),'docoast')) == 0,
+    if nnz(ismember(para(:,1),'docoast')) == 0
         docoast = 1;
     else
         docoast = para{ismember(para(:,1),'docoast'),2};
     end
-    if nnz(ismember(para(:,1),'coastwi')) == 0,
+    if nnz(ismember(para(:,1),'coastwi')) == 0
         coastwi = 2;
     else
         coastwi = para{ismember(para(:,1),'coastwi'),2};
     end
 
-    if subcoast > 0,
+    if subcoast > 0
         CDF_boundaries('color',coast_color,'do_m_map',1)
     end
     
-    if docoast ~= 0,
-        if coastwi == 1,
+    if docoast ~= 0
+        if coastwi == 1
             m_coast('color',coast_color,'linewi',coastwi);
         else
             m_coast('color','k','linewi',coastwi);
@@ -421,7 +422,7 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Set up the whole figure
     % *********************************************************************  
-    if nnz(ismember(para(:,1),'daspect')) == 0,
+    if nnz(ismember(para(:,1),'daspect')) == 0
         daspect([1 .7 1]);
     else
         daspect(para{ismember(para(:,1),'daspect'),2});
@@ -431,7 +432,7 @@ function CDF_plot_map(type,data,varargin)
     set(gcf, 'PaperPositionMode','auto');
     set(gcf,'color','w');
 
-    if nnz(ismember(para(:,1),'interpreter')) == 0,
+    if nnz(ismember(para(:,1),'interpreter')) == 0
         set(gca,'fontsize',fs,'fontweight',fontweight);
     else
         set(gca,'fontsize',fs,'fontweight','normal','fontname','CMU Serif');
@@ -443,13 +444,13 @@ function CDF_plot_map(type,data,varargin)
     % *********************************************************************
     % Add the figure label
     % ********************************************************************* 
-    if nnz(ismember(para(:,1),'plabel')) == 0,
+    if nnz(ismember(para(:,1),'plabel')) == 0
         plabel = '';
     else
         plabel = para{ismember(para(:,1),'plabel'),2};
     end
 
-    if nnz(ismember(para(:,1),'plcol')) == 0,
+    if nnz(ismember(para(:,1),'plcol')) == 0
         plcol = [1 1 1] * 0;
     else
         plcol = para{ismember(para(:,1),'plcol'),2};

@@ -100,6 +100,11 @@ function CDF_scatter_legend(in_name,in_st,in_col,mode_in,varargin)
         ftsize = para{ismember(para(:,1),'fontsize'),2};
     end
 
+    if nnz(ismember(para(:,1),'fontweight')) == 0,
+        fontweight = 'bold';
+    else
+        fontweight = para{ismember(para(:,1),'fontweight'),2};
+    end
 
     % *********************************************************************
     % Generate figures
@@ -123,12 +128,12 @@ function CDF_scatter_legend(in_name,in_st,in_col,mode_in,varargin)
                 plot(x,-y,in_st(i),'color',edgecol,'linewi',linewi, ...
                     'markerfacecolor',in_col(i,:),'markersize',mksize);
                 text(x + 0.09, - y, in_name{i},...
-                    'fontsize',ftsize,'fontweight','bold');
+                    'fontsize',ftsize,'fontweight',fontweight);
             else
                 patch([-0.2 0.2 0.2 -0.2]/2 + x,[-0.2 -0.2 0.2 0.2] - y, ...
                         in_col(i,:),'linest','none');
                 text(x + 0.14,- y,in_name{i}, ...
-                    'fontsize',ftsize,'fontweight','bold');
+                    'fontsize',ftsize,'fontweight',fontweight);
             end
             
         else
@@ -136,12 +141,12 @@ function CDF_scatter_legend(in_name,in_st,in_col,mode_in,varargin)
                 plot(y,-x,in_st(i),'color',edgecol,'linewi',linewi, ...
                     'markerfacecolor',in_col(i,:),'markersize',mksize);
                 text(y+0.09 , -x, in_name{i}, ...
-                    'fontsize',ftsize,'fontweight','bold');
+                    'fontsize',ftsize,'fontweight',fontweight);
             else
                 patch([-0.2 0.2 0.2 -0.2]/2 + y,[-0.2 -0.2 0.2 0.2] - x, ...
                     in_col(i,:),'linest','none');
                 text(y + 0.14, -x, in_name{i}, ...
-                    'fontsize',ftsize,'fontweight','bold');
+                    'fontsize',ftsize,'fontweight',fontweight);
             end 
         end
     end

@@ -5,6 +5,8 @@
 %  - "edgecol":  color of edge                         default: 'k'
 %  - "linewi":   width of width                        default: 2
 %  - "mksize":   markersize                            default: 10
+%  - "legend":   legend name for each marker
+%  - "location": subplot set up
 % 
 %
 % Last update: 2018-08-20 
@@ -14,7 +16,7 @@ function [out_st,out_col] = CDF_scatter(x,y,n2,varargin)
     % *********************************************************************
     % Parse input argument
     % ********************************************************************* 
-    if numel(varargin) == 1,
+    if numel(varargin) == 1
         varargin = varargin{1};
     end
     para = reshape(varargin(:),2,numel(varargin)/2)';
@@ -28,25 +30,25 @@ function [out_st,out_col] = CDF_scatter(x,y,n2,varargin)
     % *********************************************************************
     % Assign Parameters
     % *********************************************************************    
-    if nnz(ismember(para(:,1),'edgecol')) == 0,
+    if nnz(ismember(para(:,1),'edgecol')) == 0
         edgecol = 'k';
     else
         edgecol = para{ismember(para(:,1),'edgecol'),2};
     end
 
-    if nnz(ismember(para(:,1),'linewi')) == 0,
+    if nnz(ismember(para(:,1),'linewi')) == 0
         linewi = 2;
     else
         linewi = para{ismember(para(:,1),'linewi'),2};
     end
 
-    if nnz(ismember(para(:,1),'mksize')) == 0,
+    if nnz(ismember(para(:,1),'mksize')) == 0
         mksize = 10;  mk_flag = 1;
     else
         mksize = para{ismember(para(:,1),'mksize'),2};  mk_flag = 2;
     end
 
-    if nnz(ismember(para(:,1),'xstd')) == 0,
+    if nnz(ismember(para(:,1),'xstd')) == 0
     else
         x_std = para{ismember(para(:,1),'xstd'),2};
         y_std = para{ismember(para(:,1),'ystd'),2};
@@ -63,7 +65,7 @@ function [out_st,out_col] = CDF_scatter(x,y,n2,varargin)
     % *********************************************************************
 
     n1 = max(size(x));
-    if n2 ~= 1,
+    if n2 ~= 1
         [out_st,out_col] = CDF_linest(n1,n2);
     else
         out_st  = repmat('o',1,numel(x));
@@ -72,7 +74,7 @@ function [out_st,out_col] = CDF_scatter(x,y,n2,varargin)
     
     hold on;
     for i = 1:n1
-        if numel(mksize) == 1,
+        if numel(mksize) == 1
             plot(x(i),y(i),out_st(i),'color',edgecol,...
                 'markerfacecolor',out_col(i,:),...
                 'markersize',mksize,'linewi',linewi);

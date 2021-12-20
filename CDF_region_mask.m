@@ -1,7 +1,7 @@
 % [region_mask_out,region_name] = CDF_region_mask(reso)
 function [region_mask_out,region_name_out] = CDF_region_mask(reso)
 
-    cd /Users/zen/Program/function/
+    % cd /Users/zen/Program/function/
     load weigh.dat
     for i = 1:25
         region_mask(:,:,i) = weigh((i-1)*36+1:i*36,:);
