@@ -52,22 +52,33 @@ function [region_mask_out,region_name_out,mask_region] = CDF_region_ocean_mask(r
         region_mask_temp(:,:,2) = nansum(region_mask(:,:,[2 3 5]),3);
         region_mask_temp(:,:,3) = nansum(region_mask(:,:,[7]),3);
         region_mask_temp(:,:,4) = nansum(region_mask(:,:,[8 9 10]),3);
-        region_mask_temp(:,:,5) = nansum(region_mask(:,:,[11]),3);
-        region_mask_temp(:,:,6) = nansum(region_mask(:,:,[1 4 7 12]),3); 
-        region_mask_temp(:,:,7) = nansum(region_mask(:,:,[2 3 5 8 9 10 14]),3);
-        region_mask_temp(:,:,8) = nansum(region_mask(:,:,[11 13]),3);
-        
+        region_mask_temp(:,:,5) = nansum(region_mask(:,:,[11 13]),3);
+        region_mask_temp(:,:,6) = nansum(region_mask(:,:,[12]),3); 
+        region_mask_temp(:,:,7) = nansum(region_mask(:,:,[14]),3);
+        region_mask_temp(:,:,8) = nansum(region_mask(:,:,[15 16]),3);
+
+        temp = region_mask_temp(:,:,1);
+        temp([31:34],[1:4 60:72]) = 1;
+        region_mask_temp(:,:,1) = temp;
+
+        temp = region_mask_temp(:,:,2);
+        temp([31:31],[23:25]) = 1;
+        region_mask_temp(:,:,2) = temp;
+
+        temp = region_mask_temp(:,:,5);
+        temp([10:12],[5:28]) = 1;
+        region_mask_temp(:,:,5) = temp;
+
         temp = region_mask_temp(:,:,6);
-        temp([9:12 31:34],[1:4 60:72]) = 1;
+        temp([10:12],[1:4 60:72]) = 1;
         region_mask_temp(:,:,6) = temp;
 
         temp = region_mask_temp(:,:,7);
-        temp([9:12 ],[29:58]) = 1;
-        temp([31:32],[28:46]) = 1;
+        temp([10:12 ],[29:58]) = 1;
         region_mask_temp(:,:,7) = temp;
 
         temp = region_mask_temp(:,:,8);
-        temp([9:12],[5:28]) = 1;
+        temp([10:12],[1:72]) = 0;
         region_mask_temp(:,:,8) = temp;
         
         region_mask = region_mask_temp;
@@ -88,7 +99,7 @@ function [region_mask_out,region_name_out,mask_region] = CDF_region_ocean_mask(r
         region_name = {'SubNA ','SubNWP','SubNEP','ExNA  ','ExNP  ','Mid   ','TA    ',...
             'TWP   ','TCP   ','TEP   ','TIO   ','SA    ','SIO   ','SP    ','SO    ','Ant   ','Arc   '};
     else
-        region_name = {'NA ','NP ','TA ','TP ','TIO','Pac','Atl','Ind'};
+        region_name = {'NA ','NP ','TA ','TP ','IO ','SP ','SA ','SO '};
     end
     
     for i = 1:numel(region_name)
